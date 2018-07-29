@@ -1,0 +1,2 @@
+class PageTemplateVariableValue < ApplicationRecord
+end

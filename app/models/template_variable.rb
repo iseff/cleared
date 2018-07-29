@@ -1,0 +1,2 @@
+class TemplateVariable < ApplicationRecord
+end
