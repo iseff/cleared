@@ -1,0 +1,2 @@
+class ConfirmationPage < Page
+end

@@ -1,0 +1,2 @@
+class FormPage < Page
+end

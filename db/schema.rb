@@ -10,7 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_29_203620) do
+ActiveRecord::Schema.define(version: 2018_07_30_192423) do
+
+  create_table "form_field_options", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.integer "form_field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "form_fields", force: :cascade do |t|
+    t.integer "form_id"
+    t.string "name"
+    t.string "input_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "step"
+    t.string "placeholder"
+  end
+
+  create_table "form_responses", force: :cascade do |t|
+    t.integer "form_field_id"
+    t.string "responder_id"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "forms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "url"
+  end
 
   create_table "page_template_variable_values", force: :cascade do |t|
     t.integer "page_id"
@@ -26,6 +59,7 @@ ActiveRecord::Schema.define(version: 2018_07_29_203620) do
     t.integer "template_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
   end
 
   create_table "template_variables", force: :cascade do |t|
