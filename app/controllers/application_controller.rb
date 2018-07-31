@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   def render_page(options={})
     options[:type] ||= LandingPage
     # based on domain, get the Page
-    page = options[:type].where(url: request.domain).first
+    page = options[:type].where(url: request.host).first
     template = page.template
     tvs = template.variables
     @v = {}
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
     # always try to get a form, just in case the user wants it on the homepage
     @step = params[:step] || 1
-    form = Form.where(url: request.domain).first
+    form = Form.where(url: request.host).first
     @fields = nil
     if !form.nil?
       @fields = form.fields.where(step: @step)

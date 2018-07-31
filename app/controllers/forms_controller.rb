@@ -5,7 +5,7 @@ class FormsController < ApplicationController
 
   def submit
     @step = params[:step].to_i || 1
-    form = Form.where(url: request.domain).first
+    form = Form.where(url: request.host).first
 
     @fields = form.fields.where(step: @step)
 
