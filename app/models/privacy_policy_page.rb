@@ -1,0 +1,2 @@
+class PrivacyPolicyPage < Page
+end
