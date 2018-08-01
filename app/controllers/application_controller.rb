@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
     template = page.template
     tvs = template.variables
     @v = {}
-    tvs.each { |tv| @v[tv.key_name] = tv.default_value }
-    page.variable_values.each { |vv| @v[vv.template_variable.key_name] = vv.value }
+    tvs.each { |tv| @v[tv.key_name] = tv.default_value.html_safe }
+    page.variable_values.each { |vv| @v[vv.template_variable.key_name] = vv.value.html_safe }
 
     # always try to get a form, just in case the user wants it on the homepage
     @step = params[:step] || 1
