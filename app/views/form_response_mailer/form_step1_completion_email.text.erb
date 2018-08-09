@@ -1,0 +1,7 @@
+Form completion: <%= @form.name %> (<%= @form.id %>)
+
+Completed by responder_id: <%= @responder_id %>
+
+<% @form_responses.each do |fr| %>
+  <%= fr.form_field.name %>: <%= fr.value %> 
+<% end %>
