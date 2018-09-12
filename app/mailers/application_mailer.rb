@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'phaig@tryequal.com'
+  default from: 'corp@assemblerlabs.com'
   layout 'mailer'
 end
