@@ -34,7 +34,7 @@ module FormsHelper
     elsif options[:button_text]&.is_a?(Hash)
       btn_text = options[:button_text][@step]
     elsif options[:button_text]&.is_a?(Array)
-      btn_text = options[:button_text][@step - 1]
+      btn_text = options[:button_text][@step.to_i - 1]
     end
 
     field_htmls << "<button id='signup-submit' class='btn btn-primary'>#{btn_text}</button>"
