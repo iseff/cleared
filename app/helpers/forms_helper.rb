@@ -11,9 +11,9 @@ module FormsHelper
     @fields.each do |field|
       case field.input_type
       when "text", "email", "date", "password", "tel", "name"
-        field_htmls << "<input type='#{field.input_type}' name='#{field.name}' class='#{options[:field_class]}' placeholder='#{field.placeholder}' />"
+        field_htmls << "<input type='#{field.input_type}' name='#{field.name}' class='#{options[:field_class]}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}' />"
       when "dropdown"
-        fstr = "<select name='#{field.name}' class='#{options[:field_class]}'>"
+        fstr = "<select name='#{field.name}' id='field_#{field.name.tableize}' class='#{options[:field_class]}'>"
         field.options.each do |opt|
           fstr += "<option value='#{opt.value}'>#{opt.name}</option>"
         end
@@ -22,7 +22,7 @@ module FormsHelper
       when "radio"
         fstr = ""
         field.options.each do |opt|
-          fstr += "<input type='radio' name='#{opt.name}' value='#{opt.value}' class='#{options[:field_class]}' /> #{opt.value}"
+          fstr += "<input type='radio' name='#{opt.name}' value='#{opt.value}' id='field_#{field.name.tableize}' class='#{options[:field_class]}' /> #{opt.value}"
         end
         field_htmls << fstr
       end
