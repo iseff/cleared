@@ -28,7 +28,16 @@ module FormsHelper
       end
     end
 
-    field_htmls << "<button id='signup-submit' class='btn btn-primary'>#{options[:button_text]}</button>"
+    btn_text = "Submit"
+    if options[:button_text]&.is_a?(String)
+      btn_text = options[:button_text]
+    elsif options[:button_text]&.is_a?(Hash)
+      btn_text = options[:button_text][@step]
+    elsif options[:button_text]&.is_a?(Array)
+      btn_text = options[:button_text][@step - 1]
+    end
+
+    field_htmls << "<button id='signup-submit' class='btn btn-primary'>#{btn_text}</button>"
 
     str += field_htmls.join(options[:separator])
     str += "</form>"
