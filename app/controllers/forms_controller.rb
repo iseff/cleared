@@ -32,7 +32,7 @@ class FormsController < ApplicationController
       email_field = form.fields.where(name: "email").first
       fr = FormResponse.where(form_field_id: email_field.id, responder_id: responder_id).first
       if page.confirmation_email_html && fr.value
-        ConfirmationMailer.confirmation_mailer(fr.value, page.confirmation_email_html).deliver_later
+        ConfirmationMailer.confirmation(fr.value, page.confirmation_email_html).deliver_later
       end
       redirect_to form_complete_path
     end
