@@ -28,6 +28,12 @@ class FormsController < ApplicationController
     if any_next_fields
       redirect_to form_path(step: next_step)
     else
+      page = ConfirmationPage.where(url: request.host).first
+      email_field = form.fields.where(name: "email").first
+      fr = FormResponse.where(form_field_id: email_field.id, responder_id: responder_id).first
+      if page.confirmation_email_html && fr.value
+        ConfirmationMailer.confirmation_mailer(fr.value, page.confirmation_email_html).deliver_later
+      end
       redirect_to form_complete_path
     end
   end
