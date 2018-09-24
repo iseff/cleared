@@ -5,8 +5,8 @@ class ConfirmationMailer < ApplicationMailer
   #
   #   en.confirmation_mailer.confirmation.subject
   #
-  def confirmation(to, template)
+  def confirmation(to, template, name)
     @template = template
-    mail to: to
+    mail to: to, subject: "Thanks for signing up for #{name}", from: "#{name} <corp@assemblerlabs.com>"
   end
 end
