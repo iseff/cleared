@@ -11,19 +11,21 @@ module FormsHelper
 
     @fields.each do |field|
       classes = options[:field_class] || ""
-      if !field.nil? && !field.trackable
+      trackable = true
+      if !field.trackable.nil? && !field.trackable
+        trackable = false
         classes += " inspectletIgnore "
       end
 
       case field.input_type
       when "text", "email", "date", "password", "tel", "name"
         tag = "<input type='#{field.input_type}' name='#{field.name}' class='#{classes}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}'"
-        tag += "heap-ignore='true'" if !field.nil? && !field.trackable
+        tag += "heap-ignore='true'" if !trackable
         tag += " />"
         field_htmls << tag
       when "dropdown"
         fstr = "<select name='#{field.name}' id='field_#{field.name.tableize}' class='#{classes}' "
-        fstr += "heap-ignore='true'" if !field.nil? && !field.trackable
+        fstr += "heap-ignore='true'" if !trackable
         fstr += " >"
         field.options.each do |opt|
           fstr += "<option value='#{opt.value}'>#{opt.name}</option>"
@@ -34,7 +36,7 @@ module FormsHelper
         fstr = ""
         field.options.each do |opt|
           fstr += "<input type='radio' name='#{opt.name}' value='#{opt.value}' id='field_#{field.name.tableize}' class='#{classes}' "
-          fstr += "heap-ignore='true'" if !field.nil? && !field.trackable
+          fstr += "heap-ignore='true'" if !trackable
           fstr += " /> #{opt.value}"
         end
         field_htmls << fstr
