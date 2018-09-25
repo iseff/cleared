@@ -8,12 +8,23 @@ module FormsHelper
     str += "<input type='hidden' name='step' value='#{@step}' />"
     str += "<input type='hidden' name='authenticity_token' value='#{form_authenticity_token}' />"
     field_htmls = []
+
     @fields.each do |field|
+      classes = options[:field_class] || ""
+      if !field.nil? && !field.trackable
+        classes += " inspectletIgnore "
+      end
+
       case field.input_type
       when "text", "email", "date", "password", "tel", "name"
-        field_htmls << "<input type='#{field.input_type}' name='#{field.name}' class='#{options[:field_class]}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}' />"
+        tag = "<input type='#{field.input_type}' name='#{field.name}' class='#{classes}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}'"
+        tag += "heap-ignore='true'" if !field.nil? && !field.trackable
+        tag += " />"
+        field_htmls << tag
       when "dropdown"
-        fstr = "<select name='#{field.name}' id='field_#{field.name.tableize}' class='#{options[:field_class]}'>"
+        fstr = "<select name='#{field.name}' id='field_#{field.name.tableize}' class='#{classes}' "
+        fstr += "heap-ignore='true'" if !field.nil? && !field.trackable
+        fstr += " >"
         field.options.each do |opt|
           fstr += "<option value='#{opt.value}'>#{opt.name}</option>"
         end
@@ -22,7 +33,9 @@ module FormsHelper
       when "radio"
         fstr = ""
         field.options.each do |opt|
-          fstr += "<input type='radio' name='#{opt.name}' value='#{opt.value}' id='field_#{field.name.tableize}' class='#{options[:field_class]}' /> #{opt.value}"
+          fstr += "<input type='radio' name='#{opt.name}' value='#{opt.value}' id='field_#{field.name.tableize}' class='#{classes}' "
+          fstr += "heap-ignore='true'" if !field.nil? && !field.trackable
+          fstr += " /> #{opt.value}"
         end
         field_htmls << fstr
       end
