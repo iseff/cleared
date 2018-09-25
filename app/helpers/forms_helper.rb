@@ -12,7 +12,7 @@ module FormsHelper
     @fields.each do |field|
       classes = options[:field_class] || ""
       trackable = true
-      if !field.trackable.nil? && !field.trackable
+      if field.trackable == false
         trackable = false
         classes += " inspectletIgnore "
       end
