@@ -17,14 +17,16 @@ module FormsHelper
         classes += " inspectletIgnore "
       end
 
+      fstr = ""
+      fstr += "<label>#{field.label}</label>" if !field.label.blank?
       case field.input_type
       when "text", "email", "date", "password", "tel", "name"
-        tag = "<input type='#{field.input_type}' name='#{field.name}' class='#{classes}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}'"
-        tag += "heap-ignore='true'" if !trackable
-        tag += " />"
-        field_htmls << tag
+        fstr += "<input type='#{field.input_type}' name='#{field.name}' class='#{classes}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}'"
+        fstr += "heap-ignore='true'" if !trackable
+        fstr += " />"
+        field_htmls << fstr
       when "dropdown"
-        fstr = "<select name='#{field.name}' id='field_#{field.name.tableize}' class='#{classes}' "
+        fstr += "<select name='#{field.name}' id='field_#{field.name.tableize}' class='#{classes}' "
         fstr += "heap-ignore='true'" if !trackable
         fstr += " >"
         field.options.each do |opt|
@@ -33,7 +35,6 @@ module FormsHelper
         fstr += "</select>"
         field_htmls << fstr
       when "radio"
-        fstr = ""
         field.options.each do |opt|
           fstr += "<input type='radio' name='#{opt.name}' value='#{opt.value}' id='field_#{field.name.tableize}' class='#{classes}' "
           fstr += "heap-ignore='true'" if !trackable
