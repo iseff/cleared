@@ -1,0 +1,49 @@
+class AdminController < ApplicationController
+  # Currently ALL users are admins... if this ever changed, we would need to change this
+  before_action :authenticate_user!
+
+  def index
+
+    @landing_page = landing_page_for(request.host)
+    @form_page = form_page_for(request.host)
+
+    if request.post?
+      p = params.permit(:landing_variables, :form_variables).tap do |whitelisted|
+        whitelisted[:landing_variables] = params[:landing_variables]
+        whitelisted[:form_variables] = params[:form_variables]
+      end
+      puts "*"*80
+      puts p.inspect
+      puts "*"*80
+      p[:landing_variables]&.each_pair do |variable_id, value|
+        next if value.blank?
+
+        vv = PageTemplateVariableValue.find_or_create_by(page_id: @landing_page.id, template_variable_id: variable_id)
+        vv.value = value
+        vv.save
+      end
+
+      p[:form_variables]&.each_pair do |variable_id, value|
+        next if value.blank?
+
+        vv = PageTemplateVariableValue.find_or_create_by(page_id: @form_page.id, template_variable_id: variable_id)
+        vv.value = value
+        vv.save
+      end
+    end
+  end
+
+  def template
+    p = params.permit(:id, :name, :template_code)
+    @template = Template.find(p[:id])
+
+    if request.post?
+      @template.name = p[:name]
+      @template.template_code = p[:template_code]
+      @template.save
+    end
+  end
+
+  def form
+  end
+end

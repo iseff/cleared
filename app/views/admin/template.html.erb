@@ -1,0 +1,21 @@
+<%= form_tag do %>
+  Name:
+  <br />
+  <%= text_field_tag(:name, @template.name) %>
+  <br /><br />
+
+  Code:
+  <br />
+  <%= text_area_tag(:template_code, @template.template_code) %>
+  <br /><br />
+
+  <%= submit_tag("Save changes") %>
+<% end %>
+
+<h3>Template Variables</h3>
+<% @template.variables.each do |variable| %>
+  Name: <%= variable.key_name %>
+  <br />
+  Default Value: <%= variable.default_value %>
+  <br /><br />
+<% end %>

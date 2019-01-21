@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   def render_page(options={})
     options[:type] ||= LandingPage
     # based on domain, get the Page
-    page = options[:type].where(url: request.host).first
+    page = page_for(page_type: options[:type], host: request.host)
     template = page.template
     tvs = template.variables
     @v = {}
@@ -18,6 +18,18 @@ class ApplicationController < ActionController::Base
     end
 
     render inline: template.template_code
+  end
+
+  def landing_page_for(host)
+    page_for(page_type: LandingPage, host: host)
+  end
+
+  def form_page_for(host)
+    page_for(page_type: FormPage, host: host)
+  end
+
+  def page_for(options={})
+    options[:page_type].where(url: options[:host]).last
   end
 
 end
