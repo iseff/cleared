@@ -53,7 +53,7 @@ module FormsHelper
       btn_text = options[:button_text][@step.to_i - 1]
     end
 
-    field_htmls << "<button id='signup-submit' class='btn btn-primary'>#{btn_text}</button>"
+    field_htmls << "<button id='signup-submit' class='btn btn-primary'>#{btn_text.html_safe}</button>"
 
     str += field_htmls.join(options[:separator])
     str += "</form>"
