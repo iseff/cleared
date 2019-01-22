@@ -20,7 +20,7 @@ module FormsHelper
       fstr = ""
       fstr += "<label>#{field.label}</label>" if !field.label.blank?
       case field.input_type
-      when "text", "email", "date", "password", "tel", "name"
+      when "text", "email", "date", "password", "tel", "name", "number"
         fstr += "<input type='#{field.input_type}' name='#{field.name}' class='#{classes}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}'"
         fstr += "heap-ignore='true'" if !trackable
         fstr += " />"
