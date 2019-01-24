@@ -1,0 +1,21 @@
+<h1>Form Responses: <%= @form.url %></h1>
+
+<table>
+  <tr>
+    <% @form_fields.each do |field| %>
+      <th>
+        <%= field.name %>
+      </th>
+    <% end %>
+  </tr>
+
+  <% @responses.each_pair do |responder_id, arr| %>
+    <tr>
+      <% arr.each do |resp| %>
+        <td>
+          <%= resp[1] %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

@@ -12,9 +12,7 @@ class AdminController < ApplicationController
         whitelisted[:landing_variables] = params[:landing_variables]
         whitelisted[:form_variables] = params[:form_variables]
       end
-      puts "*"*80
-      puts p.inspect
-      puts "*"*80
+
       p[:landing_variables]&.each_pair do |variable_id, value|
         next if value.blank?
 
@@ -45,5 +43,25 @@ class AdminController < ApplicationController
   end
 
   def form
+  end
+
+  def form_responses
+    @form = form_for(request.host)
+    @form_fields = @form.fields.order(id: :asc)
+
+    frs = FormResponse.where(form_field_id: @form_fields.map(&:id))
+
+    # group responses by responder and then the form_field_id
+    # { responder_id: [ [field_id, "response"] ] }, where field_id is ordered
+    @responses = {}
+    frs.each do |fr|
+      @responses[fr.responder_id] ||= []
+      @responses[fr.responder_id] << [fr.form_field_id, fr.value]
+    end
+    #@responses.each_pair do |responder_id, arr|
+  #    arr.sort do |a, b|
+  #      a[0] <=> b[0]
+  #    end
+  #  end
   end
 end

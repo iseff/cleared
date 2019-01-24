@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_21_135252) do
+ActiveRecord::Schema.define(version: 2019_01_21_210019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2019_01_21_135252) do
     t.integer "step"
     t.string "placeholder"
     t.boolean "trackable"
+    t.string "label"
   end
 
   create_table "form_responses", force: :cascade do |t|

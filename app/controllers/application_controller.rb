@@ -28,6 +28,10 @@ class ApplicationController < ActionController::Base
     page_for(page_type: FormPage, host: host)
   end
 
+  def form_for(host)
+    page_for(page_type: Form, host: host)
+  end
+
   def page_for(options={})
     options[:page_type].where(url: options[:host]).last
   end
