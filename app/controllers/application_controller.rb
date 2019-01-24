@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     form = Form.where(url: request.host).first
     @fields = nil
     if !form.nil?
-      @fields = form.fields.where(step: @step)
+      @fields = form.fields.where(step: @step).order(id: :asc)
     end
 
     render inline: template.template_code
