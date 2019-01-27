@@ -9,6 +9,8 @@ module FormsHelper
     str += "<input type='hidden' name='authenticity_token' value='#{form_authenticity_token}' />"
     field_htmls = []
 
+    first = true
+
     @fields.each do |field|
       classes = options[:field_class] || ""
       trackable = true
@@ -23,11 +25,21 @@ module FormsHelper
       when "text", "email", "date", "password", "tel", "name", "number"
         fstr += "<input type='#{field.input_type}' name='#{field.name}' class='#{classes}' id='field_#{field.name.tableize}' placeholder='#{field.placeholder}'"
         fstr += "heap-ignore='true'" if !trackable
-        fstr += " autofocus />"
+
+        if first
+          fstr += " autofocus"
+        end
+
+        fstr += " />"
         field_htmls << fstr
       when "dropdown"
         fstr += "<select name='#{field.name}' id='field_#{field.name.tableize}' class='#{classes}' "
         fstr += "heap-ignore='true'" if !trackable
+
+        if first
+          fstr += " autofocus"
+        end
+
         fstr += " >"
         field.options.each do |opt|
           fstr += "<option value='#{opt.value}'>#{opt.name}</option>"
@@ -42,6 +54,8 @@ module FormsHelper
         end
         field_htmls << fstr
       end
+
+      first = false
     end
 
     btn_text = "Submit"
