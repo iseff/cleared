@@ -6,7 +6,7 @@
 Landing Page Template: <%= link_to @landing_page.template.name, admin_template_path(@landing_page.template_id) %> (<%= @landing_page.template.id %>)
 <br /><br />
 <h3>Variable values</h3>
-<%= form_tag(admin_update_path, id: @form_page.id) do %>
+<%= form_tag(admin_update_path, id: @landing_page.id) do %>
   <% @landing_page.template.variables.each do |variable| %>
     <% vv = @landing_page.variable_values.where(template_variable_id: variable.id).first %>
     <%= variable.key_name %>: <%= text_field_tag "landing_variables[#{variable.id}]", vv&.value, placeholder: variable.default_value %>
@@ -15,18 +15,20 @@ Landing Page Template: <%= link_to @landing_page.template.name, admin_template_p
   <%= submit_tag "Save variables" %>
 <% end %>
 
-<h2>Form Page Name: <%= @form_page.name %></h2>
+<% if !@form_page.nil? %>
+  <h2>Form Page Name: <%= @form_page.name %></h2>
 
-Form Page Template: <%= link_to @form_page.template.name, admin_template_path(@form_page.template_id) %> (<%= @form_page.template.id %>)
-<br /><br />
-<h3>Variable values</h3>
-<%= form_tag(admin_update_path, id: @form_page.id) do %>
-  <% @form_page.template.variables.each do |variable| %>
-    <% vv = @form_page.variable_values.where(template_variable_id: variable.id).first %>
-    <%= variable.key_name %>: <%= text_field_tag "form_variables[#{variable.id}]", vv&.value, placeholder: variable.default_value %>
-  <% end %>
+  Form Page Template: <%= link_to @form_page.template.name, admin_template_path(@form_page.template_id) %> (<%= @form_page.template.id %>)
   <br /><br />
-  <%= submit_tag "Save variables" %>
-<% end %>
+  <h3>Variable values</h3>
+  <%= form_tag(admin_update_path, id: @form_page.id) do %>
+    <% @form_page.template.variables.each do |variable| %>
+      <% vv = @form_page.variable_values.where(template_variable_id: variable.id).first %>
+      <%= variable.key_name %>: <%= text_field_tag "form_variables[#{variable.id}]", vv&.value, placeholder: variable.default_value %>
+    <% end %>
+    <br /><br />
+    <%= submit_tag "Save variables" %>
+  <% end %>
 
-<h2><%= link_to "Form Responses", admin_form_responses_path %></h2>
+  <h2><%= link_to "Form Responses", admin_form_responses_path %></h2>
+<% end %>
