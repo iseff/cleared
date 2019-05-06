@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   # Currently ALL users are admins... if this ever changed, we would need to change this
+  protect_from_forgery prepend: true
   before_action :authenticate_user!
 
   def index
